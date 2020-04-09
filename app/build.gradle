@@ -54,6 +54,7 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:28.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:support-v4:28.0.0'
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
@@ -65,4 +66,3 @@ sceneform.asset('sampledata/models/andy.obj',
 repositories {
     mavenCentral()
 }
-

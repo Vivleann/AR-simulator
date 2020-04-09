@@ -1,4 +1,4 @@
-package com.google.ar.sceneform.samples.hellosceneform
+package com.google.ar.sceneform.samples.hellosceneform.ar
 
 import android.app.Activity
 import android.app.ActivityManager
