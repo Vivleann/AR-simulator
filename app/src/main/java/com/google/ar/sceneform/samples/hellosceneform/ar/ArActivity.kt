@@ -1,13 +1,14 @@
-package com.google.ar.sceneform.samples.hellosceneform
+package com.google.ar.sceneform.samples.hellosceneform.ar
 
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
+import android.os.Looper
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.MotionEvent
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
@@ -15,15 +16,15 @@ import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.*
-import com.google.ar.sceneform.samples.hellosceneform.ar.ArUtils
-import com.google.ar.sceneform.samples.hellosceneform.ui.LoginFragment
-import com.google.ar.sceneform.samples.hellosceneform.ui.WaitingFragment
+import com.google.ar.sceneform.samples.hellosceneform.android.AndroidUtils
+import com.google.ar.sceneform.samples.hellosceneform.R
+import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainer
+import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainer2
+import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainerContentView
 import com.google.ar.sceneform.ux.ArFragment
-import java.lang.Exception
+import kotlinx.android.synthetic.main.activity_ux.*
 
 class ArActivity : AppCompatActivity() {
-
-    private var waitingFragment: WaitingFragment? = null
 
     private lateinit var arFragment: ArFragment
     private var andyRenderable: ModelRenderable? = null
@@ -50,30 +51,13 @@ class ArActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_ux)
 
-        if (PreferencesUtils.getString(PreferencesUtils.LOGIN_KEY) != "" &&
-                PreferencesUtils.getString(PreferencesUtils.PASSWORD_KEY) != "") {
-            //todo: start game
-            openWaitingFragment(WaitingFragment.GAME_START)
-        } else {
-            changeFragment(LoginFragment(), R.id.main_content)
-        }
-
-
-//        if ((supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?) != null)
-//            arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment
-
-
-    }
-
-    fun onGameConnected() {
-        waitingFragment!!.dismiss()
-        waitingFragment = null
-        arFragment = ArFragment()
-        changeFragment(arFragment, R.id.main_content)
         setAr()
     }
 
     private fun setAr() {
+        if ((supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?) != null)
+            arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment
+
         initFieldCube()
         initSphere()
         initNpc()
@@ -81,8 +65,7 @@ class ArActivity : AppCompatActivity() {
         arFragment.arSceneView.scene.addOnUpdateListener {
             val frame = arFragment.arSceneView.arFrame
             if (frame != null) {
-                //processPlane(frame)
-                //processAugmentedImage(frame)
+                processPlane(frame)
             }
         }
 
@@ -90,27 +73,10 @@ class ArActivity : AppCompatActivity() {
             val anchor = hitResult.createAnchor()
             if (!npcPlaced) {
                 //placeCylinder(anchor)
-                placeField(anchor)
-                npcPlaced = true
+//                placeField(anchor)
+//                npcPlaced = true
             }
         }
-    }
-
-    fun changeFragment(fragment: Fragment, frame: Int) {
-        try {
-            val fragmentManager = supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(frame, fragment)
-            fragmentTransaction.commit()
-        } catch (e: Exception) {
-            AndroidUtils.showProblemToast(this)
-            println(e)
-        }
-    }
-
-    fun openWaitingFragment(title: String) {
-        waitingFragment = WaitingFragment(title)
-        waitingFragment!!.show(supportFragmentManager, WaitingFragment.TAG)
     }
 
     private fun processPlane(frame: Frame) {
@@ -119,25 +85,37 @@ class ArActivity : AppCompatActivity() {
             if (plane.trackingState == TrackingState.TRACKING) {
                 if (!npcPlaced) {
                     val anchor = plane.createAnchor(plane.centerPose)
-                    //placeCylinder(anchor)
+                    placeField(anchor)
                     npcPlaced = true
+                    addChooseView()
                 }
                 break
             }
         }
     }
 
-    private fun processAugmentedImage(frame: Frame) {
-        val images = frame.getUpdatedTrackables(AugmentedImage::class.java)
-        for (img in images) {
-            if (img.trackingState == TrackingState.TRACKING) {
-                if (img.name == "field" && !markerPlaces) {
-                    val anchor = img.createAnchor(img.centerPose)
-                    Toast.makeText(this, "${anchor.pose.tx()}\n${anchor.pose.ty()}\n${anchor.pose.tz()}", Toast.LENGTH_LONG).show()
-                    markerPlaces = true
-                }
-            }
-        }
+    private fun addChooseView() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val swipeContainer = SwipeContainer(this)
+            swipeContainer.init(SwipeContainerContentView.CHOOSE_VIEW)
+            val params = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+            )
+            swipeContainer.layoutParams = params
+            content.addView(swipeContainer)
+            swipeContainer.appear()
+        }, 300)
+    }
+
+    private fun openDescription() {
+        val cont = SwipeContainer2(this)
+        cont.init(0)
+        val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        )
+        cont.layoutParams = params
+        content.addView(cont)
+        cont.appear()
     }
 
     private fun initSphere() {

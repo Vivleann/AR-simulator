@@ -1,4 +1,4 @@
-package com.google.ar.sceneform.samples.hellosceneform
+package com.google.ar.sceneform.samples.hellosceneform.android
 
 import android.content.Context
 import android.content.SharedPreferences

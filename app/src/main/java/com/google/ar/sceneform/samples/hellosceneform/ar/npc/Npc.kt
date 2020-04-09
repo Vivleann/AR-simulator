@@ -1,9 +1,8 @@
-package com.google.ar.sceneform.samples.hellosceneform.npc
+package com.google.ar.sceneform.samples.hellosceneform.ar.npc
 
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.os.Handler
 import android.view.Gravity
 import android.widget.Toast
 import com.google.ar.core.Anchor

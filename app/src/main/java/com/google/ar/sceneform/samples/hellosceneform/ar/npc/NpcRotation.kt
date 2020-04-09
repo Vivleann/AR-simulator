@@ -1,4 +1,4 @@
-package com.google.ar.sceneform.samples.hellosceneform.npc
+package com.google.ar.sceneform.samples.hellosceneform.ar.npc
 
 import com.google.ar.sceneform.math.Vector3
 import java.util.*

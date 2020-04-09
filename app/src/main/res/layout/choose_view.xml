@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="bottom"
+    android:elevation="32dp"
+    android:background="@drawable/choose_view_bg">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="32dp">
+
+
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+        android:textColor="@color/color_black"
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose the element"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:layout_marginTop="16dp"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroySemiBold
+        android:textColor="@color/color_grey_text"
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:text="Click to place"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"/>
+
+
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroySemiBold
+        android:textColor="@color/color_grey_text"
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:text="Touch and hold to read more"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/ln1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv3"
+        android:gravity="center">
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ln1"
+        android:gravity="center">
+
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

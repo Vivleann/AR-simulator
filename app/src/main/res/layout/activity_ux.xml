@@ -1,19 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:id="@+id/content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ar.ArActivity">
 
-  <!--<fragment -->
-      <!--android:name="com.google.ar.sceneform.ux.ArFragment"-->
-      <!--android:id="@+id/ux_fragment"-->
-      <!--android:layout_width="match_parent"-->
-      <!--android:layout_height="match_parent" />-->
-
   <fragment
-      android:name="com.google.ar.sceneform.samples.hellosceneform.ar.CustomArFragment"
+      android:name="com.google.ar.sceneform.ux.ArFragment"
       android:id="@+id/ux_fragment"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="match_parent" />
+
+  <!--<com.google.ar.sceneform.samples.hellosceneform.ui.ChooseView-->
+      <!--android:layout_gravity="bottom"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content">-->
+  <!--</com.google.ar.sceneform.samples.hellosceneform.ui.ChooseView>-->
 
 </FrameLayout>
