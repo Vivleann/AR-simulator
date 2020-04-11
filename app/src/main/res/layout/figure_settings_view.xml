@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout android:orientation="vertical"
+    android:background="@drawable/choose_view_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</android.support.constraint.ConstraintLayout>
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+        android:textColor="@color/color_black"
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:layout_marginTop="16dp"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@color/color_black"
+        android:textSize="20sp"
+        android:text="Set rotation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/color_white"
+            android:id="@+id/btn_0"
+            app:cardElevation="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="27sp"
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/color_white"
+            android:id="@+id/btn_90"
+            app:cardElevation="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="27sp"
+                android:text="90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/color_white"
+            android:id="@+id/btn_180"
+            app:cardElevation="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="27sp"
+                android:text="180"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/color_white"
+            android:id="@+id/btn_270"
+            app:cardElevation="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="27sp"
+                android:text="270"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/delete_btn"
+        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="@color/color_white"
+        app:cardElevation="5dp"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroyBold
+            android:layout_margin="15dp"
+            android:textSize="20sp"
+            android:textColor="@color/color_black"
+            android:gravity="center"
+            android:text="Delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

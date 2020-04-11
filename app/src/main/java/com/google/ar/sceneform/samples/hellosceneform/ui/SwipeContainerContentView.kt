@@ -21,6 +21,8 @@ class SwipeContainerContentView(
 
     companion object {
         const val CHOOSE_VIEW = R.layout.choose_view
+        const val DESCRIPTION_VIEW = R.layout.about_view
+        const val SETTINGS_VIEW = R.layout.figure_settings_view
     }
 
     private lateinit var container: SwipeContainer
@@ -28,17 +30,24 @@ class SwipeContainerContentView(
     fun init(container: SwipeContainer, layout: Int) {
         this.container = container
 
-        LayoutInflater.from(context).inflate(R.layout.choose_view, this, true)
         val params = CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT
         )
         params.behavior = BottomSheetBehavior<FrameLayout>()
         layoutParams = params
+
+        when (layout) {
+            SETTINGS_VIEW -> addView(SettingsView(context))
+            CHOOSE_VIEW -> addView(ChooseView(context))
+            else -> addView(DescriptionView(context))
+        }
+
+//        LayoutInflater.from(context).inflate(layout, this, true)
+
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
                 container.setPeekHeight(height)
-                Log.d("SwipeContainerContentView", "height == $height")
             }
         })
     }

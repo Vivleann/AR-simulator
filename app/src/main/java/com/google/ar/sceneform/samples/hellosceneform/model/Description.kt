@@ -1,4 +1,6 @@
 package com.google.ar.sceneform.samples.hellosceneform.model
 
-class Description {
-}
+class Description(
+        val title: String,
+        val body: String
+)

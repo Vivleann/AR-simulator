@@ -1,7 +1,10 @@
-package com.sobol.testserverrequests.server.api
+package com.google.ar.sceneform.samples.hellosceneform.server.api
 
-import com.sobol.testserverrequests.server.model.bodies.*
-import com.sobol.testserverrequests.server.model.responses.*
+import com.google.ar.sceneform.samples.hellosceneform.server.model.responses.*
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.FiguresBody
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.RegistrationBody
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.StandBallBody
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.StatusBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -36,8 +39,5 @@ interface API {
     @Headers("Authorization: Token a015453030a8d38e9d185c646416e6e275ad6e09")
     @GET("game/figures/")
     fun getFigures(): Call<FiguresResponse>
-
-
-
 
 }

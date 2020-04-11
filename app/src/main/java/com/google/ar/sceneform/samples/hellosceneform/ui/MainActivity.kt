@@ -10,7 +10,7 @@ import java.lang.Exception
 import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import com.google.ar.sceneform.samples.hellosceneform.ar.ArActivity
-
+import com.google.ar.sceneform.samples.hellosceneform.server.requests.LoginRequest
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             changeFragment(LoginFragment(), R.id.main_content)
         }
 
+                //LoginRequest("BananaDev", "4nN-qJE-hHp-8Lm").execute()
     }
 
     fun onGameConnected() {

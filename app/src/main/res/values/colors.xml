@@ -8,5 +8,6 @@
     <color name="color_grey">#F2F3F5</color>
     <color name="color_grey_text">#A5A5A5</color>
     <color name="color_black_transparent">#9000</color>
+    <color name="color_white_transparent">#9FFF</color>
 
 </resources>

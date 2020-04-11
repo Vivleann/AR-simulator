@@ -1,12 +1,8 @@
-package com.sobol.testserverrequests.server.requests
+package com.google.ar.sceneform.samples.hellosceneform.server.requests
 
-import com.sobol.testserverrequests.server.Constants
-import com.sobol.testserverrequests.server.api.API
-import com.sobol.testserverrequests.server.model.bodies.BallBody
-import com.sobol.testserverrequests.server.model.bodies.RegistrationBody
-import com.sobol.testserverrequests.server.model.responses.BallResponse
-import com.sobol.testserverrequests.server.model.responses.RegistrationResponse
-import com.sobol.testserverrequests.server.model.responses.StatusResponse
+import com.google.ar.sceneform.samples.hellosceneform.server.api.API
+import com.google.ar.sceneform.samples.hellosceneform.server.Constants
+import com.google.ar.sceneform.samples.hellosceneform.server.model.responses.BallResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

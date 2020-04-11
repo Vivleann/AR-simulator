@@ -1,4 +1,4 @@
-package com.sobol.testserverrequests.server.model.responses
+package com.google.ar.sceneform.samples.hellosceneform.server.model.responses
 
 class BallResponse(
     val pos:  List<Double>,

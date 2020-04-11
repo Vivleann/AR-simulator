@@ -1,9 +1,11 @@
-package com.sobol.testserverrequests.server.requests
+package com.google.ar.sceneform.samples.hellosceneform.server.requests
 
-import com.sobol.testserverrequests.server.Constants
-import com.sobol.testserverrequests.server.api.API
-import com.sobol.testserverrequests.server.model.bodies.RegistrationBody
-import com.sobol.testserverrequests.server.model.responses.RegistrationResponse
+import android.util.EventLog
+import com.google.ar.sceneform.samples.hellosceneform.server.api.API
+import com.google.ar.sceneform.samples.hellosceneform.server.Constants
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.RegistrationBody
+import com.google.ar.sceneform.samples.hellosceneform.server.model.responses.RegistrationResponse
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,11 +39,16 @@ class LoginRequest(
                 if (response.isSuccessful) {
                     println("SUCCESS Login")
                     println(response.body()?.key)
+                    EventBus.getDefault().post(RegistrationEvent(response.body()?.key))
                 } else {
                     println("NO SUCCESS Login")
                 }
             }
         })
     }
+
+    class RegistrationEvent(
+            val token: String?
+    )
 
 }

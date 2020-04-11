@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v7.app.AppCompatActivity
-import android.view.Gravity
-import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.ar.core.*
@@ -16,32 +14,42 @@ import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.*
-import com.google.ar.sceneform.samples.hellosceneform.android.AndroidUtils
 import com.google.ar.sceneform.samples.hellosceneform.R
+import com.google.ar.sceneform.samples.hellosceneform.server.model.Figure
+import com.google.ar.sceneform.samples.hellosceneform.server.requests.PostFiguresRequest
 import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainer
-import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainer2
 import com.google.ar.sceneform.samples.hellosceneform.ui.SwipeContainerContentView
+import com.google.ar.sceneform.samples.hellosceneform.ui.TimerView
+import com.google.ar.sceneform.samples.hellosceneform.ui.WaitingFragment
 import com.google.ar.sceneform.ux.ArFragment
 import kotlinx.android.synthetic.main.activity_ux.*
+import kotlin.concurrent.timer
 
 class ArActivity : AppCompatActivity() {
 
+    private val arHolder = ArHolder.instance
     private lateinit var arFragment: ArFragment
-    private var andyRenderable: ModelRenderable? = null
     private lateinit var sphereRenderable: Renderable
     private lateinit var cylinderRenderable: Renderable
-    private lateinit var cubeRenderable: Renderable
+
+    private lateinit var chooseView: SwipeContainer
+    private var descriptionView: SwipeContainer? = null
+    private var settingsView: SwipeContainer? = null
+    private var timerView: TimerView? = null
 
     private var npcPlaced = false
     private var markerPlaces = false
     private val borders = arrayOf(
-            Vector3(-.4f, .0f, -.4f),
-            Vector3(-.4f, .0f, .4f),
-            Vector3(.4f, .0f, .4f),
-            Vector3(.4f, .0f, -.4f)
+            Vector3(-.1f, .0f, -.1f),
+            Vector3(-.1f, .0f, .1f),
+            Vector3(.1f, .0f, .1f),
+            Vector3(.1f, .0f, -.1f)
     )
     private val yRoatationVector = Vector3(0f, 1f, 0f)
     private var currentAngel = 90f
+
+    private lateinit var defaultAnchor: Anchor
+    private var currentSettingNode: Node? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,29 +60,22 @@ class ArActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ux)
 
         setAr()
+
+        ready_btn.setOnClickListener {
+            ArHolder.instance.placeEnemyFigures(defaultAnchor, arFragment, this)
+        }
     }
 
     private fun setAr() {
         if ((supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?) != null)
             arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment
 
-        initFieldCube()
-        initSphere()
-        initNpc()
+        arHolder.init(this)
 
         arFragment.arSceneView.scene.addOnUpdateListener {
             val frame = arFragment.arSceneView.arFrame
             if (frame != null) {
                 processPlane(frame)
-            }
-        }
-
-        arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
-            val anchor = hitResult.createAnchor()
-            if (!npcPlaced) {
-                //placeCylinder(anchor)
-//                placeField(anchor)
-//                npcPlaced = true
             }
         }
     }
@@ -85,80 +86,102 @@ class ArActivity : AppCompatActivity() {
             if (plane.trackingState == TrackingState.TRACKING) {
                 if (!npcPlaced) {
                     val anchor = plane.createAnchor(plane.centerPose)
-                    placeField(anchor)
+                    defaultAnchor = anchor
+                    arHolder.placeField(anchor, arFragment, this)
                     npcPlaced = true
-                    addChooseView()
+                    openChooseView()
+                    openTimer()
                 }
                 break
             }
         }
     }
 
-    private fun addChooseView() {
+    private fun openTimer() {
+        timerView = TimerView(this)
+        content.addView(timerView)
+    }
+
+    fun closeTimer() {
+        content.removeView(timerView)
+        timerView = null
+        Toast.makeText(this, "Time left. Game is starting now", Toast.LENGTH_LONG).show()
+    }
+
+    private fun openChooseView() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val swipeContainer = SwipeContainer(this)
-            swipeContainer.init(SwipeContainerContentView.CHOOSE_VIEW)
+            chooseView = SwipeContainer(this)
+            chooseView.init(SwipeContainerContentView.CHOOSE_VIEW)
             val params = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
             )
-            swipeContainer.layoutParams = params
-            content.addView(swipeContainer)
-            swipeContainer.appear()
+            chooseView.layoutParams = params
+            content.addView(chooseView)
+            chooseView.appear()
         }, 300)
     }
 
-    private fun openDescription() {
-        val cont = SwipeContainer2(this)
-        cont.init(0)
+    fun collapseChooseView() {
+        chooseView.collapse()
+    }
+
+    fun openDescription() {
+        descriptionView = SwipeContainer(this)
+        descriptionView!!.init(SwipeContainerContentView.DESCRIPTION_VIEW)
         val params = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
-        cont.layoutParams = params
-        content.addView(cont)
-        cont.appear()
+        descriptionView!!.layoutParams = params
+        content.addView(descriptionView)
+        descriptionView!!.appear()
     }
 
-    private fun initSphere() {
-        val color = Color(0x00FF00)
-        val radius = .05f
-        val center = Vector3(0.0f, 0.0f, 0.0f)
-        MaterialFactory.makeOpaqueWithColor(this, color)
-                .thenAccept {
-                   material -> sphereRenderable = ShapeFactory.makeSphere(radius, center, material)
-                }
+    fun openSettingsView() {
+        settingsView = SwipeContainer(this)
+        settingsView!!.init(SwipeContainerContentView.SETTINGS_VIEW)
+        val params = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        )
+        settingsView!!.layoutParams = params
+        content.addView(settingsView)
+        settingsView!!.appear()
     }
 
-    private fun initCylinder() {
-        val color = Color(-0x10000)
-        val radius = .05f
-        val height = .3f
-        val center = Vector3(0.0f, 0.0f, 0.0f)
-        MaterialFactory.makeOpaqueWithColor(this, color)
-                .thenAccept {
-                    material -> cylinderRenderable = ShapeFactory.makeCylinder(radius, height, center, material)
-                }
+    fun removeDescription() {
+        content.removeView(descriptionView)
+        descriptionView = null
     }
 
-    private fun initFieldCube() {
-        val color = Color(AndroidUtils.adjustAlpha(-0xffff01, .5f))
-        val size = Vector3(.8f, 0f, .8f)
-        MaterialFactory.makeOpaqueWithColor(this, color)
-                .thenAccept {
-                    material -> cubeRenderable = ShapeFactory.makeCube(size, Vector3.zero(), material)
-                }
+    fun removeSettingsView() {
+        content.removeView(settingsView)
+        settingsView = null
     }
 
-    private fun initNpc() {
-        ModelRenderable.builder()
-                .setSource(this, R.raw.andy)
-                .build()
-                .thenAccept { renderable -> andyRenderable = renderable }
-                .exceptionally { throwable ->
-                    val toast = Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG)
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
-                    null
-                }
+    fun postFigures() {
+        val objs = ArHolder.instance.objList
+        val res = ArrayList<Figure>()
+        for (item in objs) {
+            val angle = when (item.currentRotation) {
+                0f -> 0
+                90f -> 1
+                180f -> 2
+                else -> 3
+            }
+            val id = when (item.id) {
+                0 -> 1
+                1 -> 3
+                2 -> 5
+                3 -> 6
+                else -> 7
+            }
+            res.add(Figure(
+                    item.i,
+                    item.j,
+                    angle,
+                    id
+            ))
+        }
+        PostFiguresRequest("app", res).execute()
     }
 
     private fun placeSphere(anchor: Anchor) {
@@ -171,38 +194,7 @@ class ArActivity : AppCompatActivity() {
         //animateNpc(node)
     }
 
-    private fun placeCylinder(anchor: Anchor) {
-        for (i in 0 until 4) {
-            val containerNode = AnchorNode(anchor)
-            containerNode.setParent(arFragment.arSceneView.scene)
-            val node = Node()
-            node.setParent(containerNode)
-            node.renderable = cylinderRenderable
-            node.localPosition = borders[i]
-        }
-        placeSphere(anchor)
-    }
 
-    private fun placeField(anchor: Anchor) {
-        val containerNode = AnchorNode(anchor)
-        containerNode.setParent(arFragment.arSceneView.scene)
-        val node = Node()
-        node.setParent(containerNode)
-        node.renderable = cubeRenderable
-        node.localPosition = Vector3.zero()
-        placeNpc(anchor)
-    }
-
-    private fun placeNpc(anchor: Anchor) {
-        val anchorNode = AnchorNode(anchor)
-        anchorNode.setParent(arFragment.arSceneView.scene)
-        val andy = Node()
-        andy.setParent(anchorNode)
-        andy.localPosition = borders[0]
-        andy.renderable = andyRenderable
-        andy.localRotation = Quaternion.axisAngle(Vector3(0f, 1f, 0f), currentAngel)
-        animateNpc(andy)
-    }
 
     private fun animateNpc(node: Node) {
         val animator = ValueAnimator.ofFloat(node.localPosition.x, node.localPosition.x * -1)
@@ -237,7 +229,7 @@ class ArActivity : AppCompatActivity() {
         animator.start()
     }
 
-    private fun animateRotation(node: Node) {
+    fun animateRotation(node: Node) {
         val from = currentAngel
         currentAngel += 180f
         if (currentAngel > 360f)

@@ -1,4 +1,5 @@
-package com.sobol.testserverrequests.server.requests
+package com.google.ar.sceneform.samples.hellosceneform.server.requests
 
 class StandReadyRequest {
+
 }

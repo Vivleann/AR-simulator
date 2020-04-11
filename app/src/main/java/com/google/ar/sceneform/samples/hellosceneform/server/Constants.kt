@@ -1,4 +1,4 @@
-package com.sobol.testserverrequests.server
+package com.google.ar.sceneform.samples.hellosceneform.server
 
 object Constants {
 

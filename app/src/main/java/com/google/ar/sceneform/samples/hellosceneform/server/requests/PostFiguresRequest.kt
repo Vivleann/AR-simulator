@@ -1,13 +1,10 @@
-package com.sobol.testserverrequests.server.requests
+package com.google.ar.sceneform.samples.hellosceneform.server.requests
 
-import com.sobol.testserverrequests.server.Constants
-import com.sobol.testserverrequests.server.api.API
-import com.sobol.testserverrequests.server.model.Figure
-import com.sobol.testserverrequests.server.model.bodies.FiguresBody
-import com.sobol.testserverrequests.server.model.bodies.StatusBody
-import com.sobol.testserverrequests.server.model.responses.FiguresResponse
-import com.sobol.testserverrequests.server.model.responses.PostFiguresResponse
-import com.sobol.testserverrequests.server.model.responses.StatusResponse
+import com.google.ar.sceneform.samples.hellosceneform.server.api.API
+import com.google.ar.sceneform.samples.hellosceneform.server.Constants
+import com.google.ar.sceneform.samples.hellosceneform.server.model.Figure
+import com.google.ar.sceneform.samples.hellosceneform.server.model.bodies.FiguresBody
+import com.google.ar.sceneform.samples.hellosceneform.server.model.responses.PostFiguresResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class PostFiguresRequest(
     private val sender: String,
-    private val figures: Array<Figure>
+    private val figures: ArrayList<Figure>
 ) {
 
     fun execute() {

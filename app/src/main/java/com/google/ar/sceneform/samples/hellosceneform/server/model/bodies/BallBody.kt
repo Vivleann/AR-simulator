@@ -1,4 +1,4 @@
-package com.sobol.testserverrequests.server.model.bodies
+package com.google.ar.sceneform.samples.hellosceneform.server.model.bodies
 
 class BallBody (
     val pos:  List<Double>,

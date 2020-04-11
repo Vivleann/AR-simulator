@@ -1,5 +1,7 @@
 package com.google.ar.sceneform.samples.hellosceneform.android
 
+import com.google.ar.sceneform.samples.hellosceneform.model.Description
+
 class Database {
 
     private object Holder {
@@ -10,13 +12,36 @@ class Database {
         val instance: Database by lazy { Holder.INSTANCE }
     }
 
-    private val polygonIcTeamPrefix = "polygon_team1_"
-    private var polygonIcCnt = 0
+    val descriptions = arrayOf(
+            Description(
+                    "Странное зеркало",
+                    "Мяч, врязаясь в пирамидку, отражается в обратном направлении"
+            ),
+            Description(
+                    "Портал",
+                    "Мяч, врязаясь в пирамидку, отражается от противоположной стороны с инвертированным вектором по оси направления стороны кубика."
+            ),
+            Description(
+                    "Выпрямитель",
+                    "Мяч, врязаясь в пирамидку, отражается от стороны, в которую врезался, под углом 90 градусов ( перпендикулярно стороне)."
+            ),
+            Description(
+                    "Нормальный ",
+                    "Оставшиеся две пирамидки отражают мяч по обычному закону отражения"
+            ),
+            Description(
+                    "Угол",
+                    "Мяч, вгрызаясь в пирамидку, отражается от стороны кубика, в которую он врезался, под углом 45 градусов в сторону, соответствующую развороту кубика."
+            )
+    )
 
-    fun getPolygonIcPrefix(): String {
-        val result = "$polygonIcTeamPrefix$polygonIcCnt.png"
+    private var polygonIcCnt = -1
+    var currentId = 0
+    var figuresLeft = 5
+
+    fun getId(): Int {
         polygonIcCnt++
-        return result
+        return polygonIcCnt
     }
 
 }

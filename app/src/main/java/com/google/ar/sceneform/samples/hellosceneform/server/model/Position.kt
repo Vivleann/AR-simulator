@@ -1,4 +1,4 @@
-package com.sobol.testserverrequests.server.model
+package com.google.ar.sceneform.samples.hellosceneform.server.model
 
 class Position(
     val x: Int,

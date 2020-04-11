@@ -93,10 +93,10 @@
             android:layout_height="wrap_content">
         </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
 
-        <com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>
+        <!--<com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</com.google.ar.sceneform.samples.hellosceneform.ui.FigureElementView>-->
 
     </LinearLayout>
 

@@ -7,9 +7,8 @@ import android.widget.FrameLayout
 import com.google.ar.sceneform.samples.hellosceneform.R
 
 class ChooseView(
-        context: Context,
-        attrs: AttributeSet
-) : FrameLayout(context, attrs) {
+        context: Context
+) : FrameLayout(context) {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.choose_view, this, true)

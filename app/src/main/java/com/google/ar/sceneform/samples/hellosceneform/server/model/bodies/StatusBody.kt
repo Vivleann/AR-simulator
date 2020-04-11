@@ -1,6 +1,6 @@
-package com.sobol.testserverrequests.server.model.bodies
+package com.google.ar.sceneform.samples.hellosceneform.server.model.bodies
 
-import com.sobol.testserverrequests.server.model.Position
+import com.google.ar.sceneform.samples.hellosceneform.server.model.Position
 
 class StatusBody (
     val action: String,

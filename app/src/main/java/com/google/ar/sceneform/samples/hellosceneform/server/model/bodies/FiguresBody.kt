@@ -1,8 +1,8 @@
-package com.sobol.testserverrequests.server.model.bodies
+package com.google.ar.sceneform.samples.hellosceneform.server.model.bodies
 
-import com.sobol.testserverrequests.server.model.Figure
+import com.google.ar.sceneform.samples.hellosceneform.server.model.Figure
 
 class FiguresBody (
     val sender: String,
-    val figures: Array<Figure>
+    val figures: ArrayList<Figure>
 )
