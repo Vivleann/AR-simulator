@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    app:cardElevation="8dp"
+    android:background="@color/color_white_transparent"
+    app:cardCornerRadius="32dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <com.google.ar.sceneform.samples.hellosceneform.ui.text_views.GilroySemiBold
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/spin_kit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Waiting for answer from server..."
+        android:layout_centerVertical="true"
+        android:textColor="@color/color_grey_text"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:layout_marginStart="5dp"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.FadingCircle"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        app:SpinKit_Color="@android:color/darker_gray" />
+</RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
